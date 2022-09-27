@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "crk-prod-optimizer"
+version = "0.1.0"
+description = ""
+authors = ["Alvin Prayuda <alvin.prayuda@pinhome.id>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+PuLP = "^2.6.0"
+typer = "^0.6.1"
+omegaconf = "^2.2.3"
+
+[tool.poetry.dev-dependencies]
+black = {version = "^21.7b0", allow-prereleases = true}
+pytest = "^6.2.4"
+pytest-cov = "^2.12.1"
+isort = "^5.9.3"
+pre-commit = "^2.13.0"
+seed-isort-config = "^2.2.0"
+flake8 = "^3.9.2"
+pytest-mock = "^3.6.1"
+taskipy = "^1.8.1"
+twine = "^3.6.0"
+
+[tool.taskipy.tasks]
+optimize_alloc = "python optimizer/main.py"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

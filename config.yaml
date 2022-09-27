@@ -1,0 +1,12 @@
+wood:
+  slots: 8
+  items:
+    pack1:
+      count: 3
+      time_cost: 21 #in seconds
+    pack2:
+      count: 9
+      time_cost: 246 #in seconds
+    pack3:
+      count: 20
+      time_cost: 3682 #in seconds
