@@ -70,10 +70,12 @@ def optimize_material(
     problem.solve(PULP_CBC_CMD(msg=0))
 
     # Results
+    print(f"Optimal Allocation for {name} :")
     for var in problem.variables():
         print(var.name, "=", var.varValue)
 
     print(f"Obtained {name} = ", value(problem.objective))
+    print("\n")
 
 
 def main(
