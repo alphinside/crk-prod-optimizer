@@ -6,8 +6,8 @@ from pulp import (
     LpMaximize,
     LpProblem,
     LpVariable,
+    lpSum,
     value,
-    lpSum
 )
 
 
@@ -20,59 +20,43 @@ def optimize_material(
     # Define entities
     entities = {}
     for item in entities_list:
-        entities[item] = LpVariable(item, lowBound=0, cat=LpInteger)
+        entities[item] = LpVariable(f"nrof_{item}", lowBound=0, cat=LpInteger)
 
     # Create objective function
-    objective_str = ""
-    for idx, entity in enumerate(entities_list):
-        material_count = getattr(material_config.entities, entity)["count"]
-        objective_str += f"entities['{entity}']*int({material_count})"
-
-        if idx != len(entities.keys()) - 1:
-            objective_str += " + "
-
-    problem += lpSum([val*getattr(material_config.entities, key)["count"] for key,val in entities]) ,"Objective Function"
-
-    # problem += (eval(objective_str), "Objective Function")
+    problem += (
+        lpSum(
+            [
+                var * getattr(material_config.entities, name)["count"]
+                for name, var in entities.items()
+            ]
+        ),
+        "Objective Function",
+    )
 
     # Create constraints
 
     # Slot constraints
-    slot_constraints_str = ""
-
-    for idx, entity in enumerate(entities_list):
-        slot_constraints_str += f"entities['{entity}']"
-
-        if idx != len(entities.keys()) - 1:
-            slot_constraints_str += " + "
-
-    slot_constraints_str += f" <= {material_config.slots}"
-
-    problem += (eval(slot_constraints_str), "Slot Limit Constraints")
+    problem += (
+        lpSum(var for var in entities.values()) <= material_config.slots,
+        "Slot Limit Constraints",
+    )
 
     # Time constraints
-
-    time_constraints_str = ""
-
-    for idx, entity in enumerate(entities_list):
-        material_time_cost = getattr(material_config.entities, entity)[
-            "time_cost"
-        ]
-        time_constraints_str += (
-            f"entities['{entity}']*int({material_time_cost})"
+    problem += (
+        lpSum(
+            var * getattr(material_config.entities, name)["time_cost"]
+            for name, var in entities.items()
         )
-
-        if idx != len(entities.keys()) - 1:
-            time_constraints_str += " + "
-
-    time_constraints_str += f" <= {time_budget}"
-
-    problem += (eval(time_constraints_str), "Time Limit Constraints")
+        <= time_budget,
+        "Time Limit Constraints",
+    )
 
     # Solver
     problem.solve(PULP_CBC_CMD(msg=0))
+    problem.writeLP("test.lp")
 
     # Results
+
     print(f"Optimal Allocation for {name} :")
     for var in problem.variables():
         print(var.name, "=", var.varValue)
