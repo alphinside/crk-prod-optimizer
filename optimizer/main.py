@@ -7,6 +7,7 @@ from pulp import (
     LpProblem,
     LpVariable,
     value,
+    lpSum
 )
 
 
@@ -30,7 +31,9 @@ def optimize_material(
         if idx != len(entities.keys()) - 1:
             objective_str += " + "
 
-    problem += (eval(objective_str), "Objective Function")
+    problem += lpSum([val*getattr(material_config.entities, key)["count"] for key,val in entities]) ,"Objective Function"
+
+    # problem += (eval(objective_str), "Objective Function")
 
     # Create constraints
 
