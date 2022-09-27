@@ -1,73 +1,94 @@
 import typer
-from enum import Enum
-from pulp import LpProblem, LpMaximize,LpVariable,LpInteger, value,PULP_CBC_CMD
-from omegaconf import OmegaConf
+from omegaconf import DictConfig, OmegaConf
+from pulp import (
+    PULP_CBC_CMD,
+    LpInteger,
+    LpMaximize,
+    LpProblem,
+    LpVariable,
+    value,
+)
 
-# def construct_problem()
 
-# def optimize_wood(time_budget:int):
-#     problem = LpProblem('wood_allocation', LpMaximize)
-#     wood1 = LpVariable('wood1', lowBound=0 , cat=LpInteger)
-#     wood2 = LpVariable('wood2', lowBound=0 , cat=LpInteger)
-#     wood3 = LpVariable('wood3', lowBound=0 , cat=LpInteger)
+def optimize_material(
+    name: str, material_config: DictConfig, time_budget: int
+):
+    problem = LpProblem(f"{name}_allocation", LpMaximize)
+    entities_list = list(material_config.entities.keys())
 
-#     #Objective Function
-#     problem += wood1*3 + wood2*9 + wood3*20, 'Objective Function'
+    # Define entities
+    entities = {}
+    for item in entities_list:
+        entities[item] = LpVariable(item, lowBound=0, cat=LpInteger)
 
-#     # The five constraints are entered
-#     problem += wood1 + wood2 + wood3 == 8, "Slot Limit"
-#     problem += wood1*21 + wood2*246 + wood3*3682 <= time_budget, "Time Limit",
-#     problem.solve(PULP_CBC_CMD(msg=0))
-#     print("Optimize prod allocation for wood:")
-#     for v in problem.variables():
-#         print(v.name, "=", v.varValue)
+    # Create objective function
+    objective_str = ""
+    for idx, entity in enumerate(entities_list):
+        material_count = getattr(material_config.entities, entity)["count"]
+        objective_str += f"entities['{entity}']*int({material_count})"
 
-#     print("Obtained wood = ", value(problem.objective))
+        if idx != len(entities.keys()) - 1:
+            objective_str += " + "
 
-# def optimize_jelly(time_budget:int):
-#     problem = LpProblem('jelly_allocation', LpMaximize)
-#     jelly1 = LpVariable('jelly1', lowBound=0 , cat=LpInteger)
-#     jelly2 = LpVariable('jelly2', lowBound=0 , cat=LpInteger)
-#     jelly3 = LpVariable('jelly3', lowBound=0 , cat=LpInteger)
+    problem += (eval(objective_str), "Objective Function")
 
-#     #Objective Function
-#     problem += jelly1*3 + jelly2*9 + jelly3*20, 'Objective Function'
+    # Create constraints
 
-#     # The five constraints are entered
-#     problem += jelly1 + jelly2 + jelly3 == 8, "Slot Limit"
-#     problem += jelly1*40 + jelly2*480 + jelly3*4000 <= time_budget, "Time Limit",
-#     problem.solve(PULP_CBC_CMD(msg=0))
-#     print("Optimize prod allocation for jelly:")
-#     for v in problem.variables():
-#         print(v.name, "=", v.varValue)
+    # Slot constraints
+    slot_constraints_str = ""
 
-#     print("Obtained jelly = ", value(problem.objective))
+    for idx, entity in enumerate(entities_list):
+        slot_constraints_str += f"entities['{entity}']"
 
-# def optimize_sugar(time_budget:int):
-#     problem = LpProblem('sugar_allocation', LpMaximize)
-#     sugar1 = LpVariable('sugar1', lowBound=0 , cat=LpInteger)
-#     sugar2 = LpVariable('sugar2', lowBound=0 , cat=LpInteger)
-#     sugar3 = LpVariable('sugar3', lowBound=0 , cat=LpInteger)
+        if idx != len(entities.keys()) - 1:
+            slot_constraints_str += " + "
 
-#     #Objective Function
-#     problem += sugar1*3 + sugar2*9 + sugar3*20, 'Objective Function'
+    slot_constraints_str += f" <= {material_config.slots}"
 
-#     # The five constraints are entered
-#     problem += sugar1 + sugar2 + sugar3 == 8, "Slot Limit"
-#     problem += sugar1*62 + sugar2*573 + sugar3*4296 <= time_budget, "Time Limit",
-#     problem.solve(PULP_CBC_CMD(msg=0))
-#     print("Optimize prod allocation for sugar:")
-#     for v in problem.variables():
-#         print(v.name, "=", v.varValue)
+    problem += (eval(slot_constraints_str), "Slot Limit Constraints")
 
-#     print("Obtained sugar = ", value(problem.objective))
+    # Time constraints
 
-def main(time_budget: int = typer.Option(3600), conf_file: str = "config.yaml"):
+    time_constraints_str = ""
+
+    for idx, entity in enumerate(entities_list):
+        material_time_cost = getattr(material_config.entities, entity)[
+            "time_cost"
+        ]
+        time_constraints_str += (
+            f"entities['{entity}']*int({material_time_cost})"
+        )
+
+        if idx != len(entities.keys()) - 1:
+            time_constraints_str += " + "
+
+    time_constraints_str += f" <= {time_budget}"
+
+    problem += (eval(time_constraints_str), "Time Limit Constraints")
+
+    # Solver
+    problem.solve(PULP_CBC_CMD(msg=0))
+
+    # Results
+    for var in problem.variables():
+        print(var.name, "=", var.varValue)
+
+    print(f"Obtained {name} = ", value(problem.objective))
+
+
+def main(
+    time_budget: int = typer.Option(3600), conf_file: str = "config.yaml"
+):
     config = OmegaConf.load(conf_file)
-    print(config)
-    # optimize_wood(time_budget)
-    # optimize_jelly(time_budget)
-    # optimize_sugar(time_budget)
+    materials_config = config.materials
+
+    for material in materials_config:
+        optimize_material(
+            name=material,
+            material_config=getattr(materials_config, material),
+            time_budget=time_budget,
+        )
+
 
 if __name__ == "__main__":
     typer.run(main)

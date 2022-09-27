@@ -1,12 +1,85 @@
-wood:
-  slots: 8
-  items:
-    pack1:
-      count: 3
-      time_cost: 21 #in seconds
-    pack2:
-      count: 9
-      time_cost: 246 #in seconds
-    pack3:
-      count: 20
-      time_cost: 3682 #in seconds
+materials:
+  wood:
+    slots: 8
+    entities:
+      pack1:
+        count: 3
+        time_cost: 21 #in seconds
+      pack2:
+        count: 9
+        time_cost: 246 #in seconds
+      pack3:
+        count: 20
+        time_cost: 3682 #in seconds
+  jellybean:
+    slots: 8
+    entities:
+      pack1:
+        count: 3
+        time_cost: 40 #in seconds
+      pack2:
+        count: 9
+        time_cost: 480 #in seconds
+      pack3:
+        count: 20
+        time_cost: 4000 #in seconds
+  sugar:
+    slots: 8
+    entities:
+      pack1:
+        count: 3
+        time_cost: 62 #in seconds
+      pack2:
+        count: 9
+        time_cost: 573 #in seconds
+      pack3:
+        count: 20
+        time_cost: 4296 #in seconds
+  flour:
+    slots: 7
+    entities:
+      pack1:
+        count: 3
+        time_cost: 410 #in seconds
+      pack2:
+        count: 9
+        time_cost: 1023 #in seconds
+      pack3:
+        count: 20
+        time_cost: 4910 #in seconds
+  berry:
+    slots: 7
+    entities:
+      pack1:
+        count: 2
+        time_cost: 778 #in seconds
+      pack2:
+        count: 6
+        time_cost: 1728 #in seconds
+      pack3:
+        count: 12
+        time_cost: 5832 #in seconds
+  milk:
+    slots: 6
+    entities:
+      pack1:
+        count: 2
+        time_cost: 1120 #in seconds
+      pack2:
+        count: 5
+        time_cost: 4800 #in seconds
+      pack3:
+        count: 8
+        time_cost: 8400 #in seconds
+  cotton:
+    slots: 6
+    entities:
+      pack1:
+        count: 1
+        time_cost: 3600 #in seconds
+      pack2:
+        count: 2
+        time_cost: 7400 #in seconds
+      pack3:
+        count: 3
+        time_cost: 11400 #in seconds
