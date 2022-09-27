@@ -56,54 +56,51 @@ TODO
 poetry run task optimize_alloc --time-budget 7200
 ```
 
-- Example result will look like this
+- Example result which will be dumped to `results.txt` will look like this
 
-```shell
-Optimal Allocation for wood :
-pack1 = 0.0
-pack2 = 7.0
-pack3 = 1.0
-Obtained wood =  83.0
+```
+Optimal allocation for duration: 7200
 
-
-Optimal Allocation for jellybean :
-pack1 = 1.0
-pack2 = 6.0
-pack3 = 1.0
-Obtained jellybean =  77.0
-
-
-Optimal Allocation for sugar :
-pack1 = 0.0
-pack2 = 8.0
-pack3 = 0.0
-Obtained sugar =  72.0
-
-
-Optimal Allocation for flour :
-pack1 = 0.0
-pack2 = 7.0
-pack3 = 0.0
-Obtained flour =  63.0
-
-
-Optimal Allocation for berry :
-pack1 = 0.0
-pack2 = 4.0
-pack3 = 0.0
-Obtained berry =  24.0
-
-
-Optimal Allocation for milk :
-pack1 = 6.0
-pack2 = 0.0
-pack3 = 0.0
-Obtained milk =  12.0
-
-
-Optimal Allocation for cotton :
-pack1 = 2.0
-pack2 = 0.0
-pack3 = 0.0
-Obtained cotton =  2.0
+Allocation for wood :
+nrof_pack1 = 0.0
+nrof_pack2 = 7.0
+nrof_pack3 = 1.0
+Will obtain wood = 83.0
+============================================================
+Allocation for jellybean :
+nrof_pack1 = 1.0
+nrof_pack2 = 6.0
+nrof_pack3 = 1.0
+Will obtain jellybean = 77.0
+============================================================
+Allocation for sugar :
+nrof_pack1 = 0.0
+nrof_pack2 = 8.0
+nrof_pack3 = 0.0
+Will obtain sugar = 72.0
+============================================================
+Allocation for flour :
+nrof_pack1 = 0.0
+nrof_pack2 = 7.0
+nrof_pack3 = 0.0
+Will obtain flour = 63.0
+============================================================
+Allocation for berry :
+nrof_pack1 = 0.0
+nrof_pack2 = 4.0
+nrof_pack3 = 0.0
+Will obtain berry = 24.0
+============================================================
+Allocation for milk :
+nrof_pack1 = 6.0
+nrof_pack2 = 0.0
+nrof_pack3 = 0.0
+Will obtain milk = 12.0
+============================================================
+Allocation for cotton :
+nrof_pack1 = 2.0
+nrof_pack2 = 0.0
+nrof_pack3 = 0.0
+Will obtain cotton = 2.0
+============================================================
 ```

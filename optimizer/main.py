@@ -1,3 +1,6 @@
+import os
+from pathlib import Path
+
 import typer
 from omegaconf import DictConfig, OmegaConf
 from pulp import (
@@ -9,6 +12,12 @@ from pulp import (
     lpSum,
     value,
 )
+
+OUTPUT_FILE = Path("results.txt")
+if OUTPUT_FILE.exists():
+    os.remove(OUTPUT_FILE)
+f = open(OUTPUT_FILE, "w")
+f.close()
 
 
 def optimize_material(
@@ -53,21 +62,23 @@ def optimize_material(
 
     # Solver
     problem.solve(PULP_CBC_CMD(msg=0))
-    problem.writeLP("test.lp")
 
     # Results
+    with open(OUTPUT_FILE, "a") as f:
+        f.write(f"Allocation for {name} :\n")
+        for var in problem.variables():
+            f.write(f"{var.name} = {var.varValue}\n")
 
-    print(f"Optimal Allocation for {name} :")
-    for var in problem.variables():
-        print(var.name, "=", var.varValue)
-
-    print(f"Obtained {name} = ", value(problem.objective))
-    print("\n")
+        f.write(f"Will obtain {name} = {value(problem.objective)}\n")
+        f.write("=" * 60 + "\n")
 
 
 def main(
     time_budget: int = typer.Option(3600), conf_file: str = "config.yaml"
 ):
+    with open(OUTPUT_FILE, "a") as f:
+        f.write(f"Optimal allocation for duration: {time_budget}\n\n")
+
     config = OmegaConf.load(conf_file)
     materials_config = config.materials
 
