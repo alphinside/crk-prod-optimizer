@@ -51,3 +51,7 @@ nrof_omurice_pack1 = 2.0
 nrof_stew_pack1 = 4.0
 nrof_stew_pack2 = 1.0
 ============================================================
+Allocation for bakery :
+nrof_castella_pack1 = 1.0
+nrof_rye_pack2 = 3.0
+============================================================

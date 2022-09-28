@@ -247,3 +247,52 @@ crafts:
           pack1:
             count: 1
             time_cost: 16800
+  bakery:
+    number_of_building: 2
+    slots: 7 # Assumption each building have same number of slots
+    item_name:
+      rye:
+        current: 37
+        max: 80
+        entities:
+          pack1:
+            count: 1
+            time_cost: 480
+          pack2:
+            count: 5
+            time_cost: 2400
+      tart:
+        current: 27
+        max: 60
+        entities:
+          pack1:
+            count: 1
+            time_cost: 800
+      foccacia:
+        current: 17
+        max: 60
+        entities:
+          pack1:
+            count: 1
+            time_cost: 1200
+      donut:
+        current: 8
+        max: 60
+        entities:
+          pack1:
+            count: 1
+            time_cost: 2400
+      castella:
+        current: 5
+        max: 60
+        entities:
+          pack1:
+            count: 1
+            time_cost: 7200
+      croissant:
+        current: 14
+        max: 60
+        entities:
+          pack1:
+            count: 1
+            time_cost: 14400
