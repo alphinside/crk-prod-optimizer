@@ -111,27 +111,26 @@ def optimize_craft(name: str, config: DictConfig, time_budget: int):
     ]
     sorted_current = sorted(current_count, key=lambda d: d["current"])
 
-    min_resource_is_found = False
-    while not min_resource_is_found:
-        for _item in sorted_current:
-            item_config = getattr(config.item_name, _item["name"])
+    for _item in sorted_current:
+        if _item["current"] > getattr(config.item_name, _item["name"])["max"]:
+            continue
 
-            candidates = []
-            for _entity, _entity_config in item_config.entities.items():
-                if _entity_config.time_cost <= time_budget:
-                    candidates.append(f"{_item['name']}_{_entity}")
+        item_config = getattr(config.item_name, _item["name"])
 
-            if len(candidates) == 0:
-                continue
+        candidates = []
+        for _entity, _entity_config in item_config.entities.items():
+            if _entity_config.time_cost <= time_budget:
+                candidates.append(f"{_item['name']}_{_entity}")
 
-            problem += (
-                lpSum([entities[entity_name] for entity_name in candidates])
-                >= 1,
-                "Least Item Constraints",
-            )
-            min_resource_is_found = True
+        if len(candidates) == 0:
+            continue
 
-            break
+        problem += (
+            lpSum([entities[entity_name] for entity_name in candidates]) >= 1,
+            "Least Item Constraints",
+        )
+
+        break
 
     # Count constraints
     for item, item_config in config.item_name.items():

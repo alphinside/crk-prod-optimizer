@@ -296,3 +296,83 @@ crafts:
           pack1:
             count: 1
             time_cost: 14400
+  carpentry:
+    number_of_building: 2
+    slots: 7 # Assumption each building have same number of slots
+    item_name:
+      birdy_toy:
+        current: 21
+        max: 60
+        entities:
+          pack1:
+            count: 1
+            time_cost: 200
+          pack2:
+            count: 5
+            time_cost: 1200
+      lamp:
+        current: 60
+        max: 60
+        entities:
+          pack1:
+            count: 1
+            time_cost: 880
+      clock:
+        current: 59
+        max: 60
+        entities:
+          pack1:
+            count: 1
+            time_cost: 4800
+      dreamcatcher:
+        current: 51
+        max: 60
+        entities:
+          pack1:
+            count: 1
+            time_cost: 8400
+  jammery:
+    number_of_building: 2
+    slots: 8 # Assumption each building have same number of slots
+    item_name:
+      jellybean_jam:
+        current: 32
+        max: 100
+        entities:
+          pack1:
+            count: 1
+            time_cost: 60
+          pack2:
+            count: 5
+            time_cost: 540
+      sweet_jelly_jam:
+        current: 54
+        max: 80
+        entities:
+          pack1:
+            count: 1
+            time_cost: 320
+          pack2:
+            count: 5
+            time_cost: 1920
+      toffee_jam:
+        current: 36
+        max: 60
+        entities:
+          pack1:
+            count: 1
+            time_cost: 800
+      pomegrenate_jam:
+        current: 50
+        max: 60
+        entities:
+          pack1:
+            count: 1
+            time_cost: 4800
+      sparkleberry_jam:
+        current: 41
+        max: 60
+        entities:
+          pack1:
+            count: 1
+            time_cost: 14400

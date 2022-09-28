@@ -55,3 +55,12 @@ Allocation for bakery :
 nrof_castella_pack1 = 1.0
 nrof_rye_pack2 = 3.0
 ============================================================
+Allocation for carpentry :
+nrof_birdy_toy_pack1 = 3.0
+nrof_birdy_toy_pack2 = 3.0
+nrof_dreamcatcher_pack1 = 1.0
+============================================================
+Allocation for jammery :
+nrof_jellybean_jam_pack2 = 6.0
+nrof_sweet_jelly_jam_pack2 = 2.0
+============================================================
