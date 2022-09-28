@@ -546,18 +546,18 @@ crafts:
         entities:
           pack1:
             count: 1
-            time_cost: _
+            time_cost: 13065
       brooch:
         current: 60
         max: 60
         entities:
           pack1:
             count: 1
-            time_cost: _
+            time_cost: 19597
       crown:
         current: 50
         max: 60
         entities:
           pack1:
             count: 1
-            time_cost: _
+            time_cost: 20904
