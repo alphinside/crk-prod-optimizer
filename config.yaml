@@ -376,3 +376,188 @@ crafts:
           pack1:
             count: 1
             time_cost: 14400
+  workshop:
+    number_of_building: 2
+    slots: 6 # Assumption each building have same number of slots
+    item_name:
+      planter:
+        current: 62
+        max: 60
+        entities:
+          pack1:
+            count: 1
+            time_cost: 600
+          pack2:
+            count: 5
+            time_cost: 3000
+      glass:
+        current: 57
+        max: 60
+        entities:
+          pack1:
+            count: 1
+            time_cost: 1080
+      bead:
+        current: 53
+        max: 60
+        entities:
+          pack1:
+            count: 1
+            time_cost: 4800
+      bowl:
+        current: 60
+        max: 60
+        entities:
+          pack1:
+            count: 1
+            time_cost: 12000
+  dairy:
+    number_of_building: 2
+    slots: 6 # Assumption each building have same number of slots
+    item_name:
+      cream:
+        current: 61
+        max: 60
+        entities:
+          pack1:
+            count: 1
+            time_cost: 1205
+      butter:
+        current: 61
+        max: 60
+        entities:
+          pack1:
+            count: 1
+            time_cost: 6231
+      cheese:
+        current: 60
+        max: 60
+        entities:
+          pack1:
+            count: 1
+            time_cost: 11216
+  cafe:
+    number_of_building: 2
+    slots: 6 # Assumption each building have same number of slots
+    item_name:
+      latte:
+        current: 57
+        max: 60
+        entities:
+          pack1:
+            count: 1
+            time_cost: 2400
+      boba:
+        current: 55
+        max: 60
+        entities:
+          pack1:
+            count: 1
+            time_cost: 7200
+      juice:
+        current: 60
+        max: 60
+        entities:
+          pack1:
+            count: 1
+            time_cost: 15600
+  toy_store:
+    number_of_building: 2
+    slots: 6 # Assumption each building have same number of slots
+    item_name:
+      pillow:
+        current: 53
+        max: 60
+        entities:
+          pack1:
+            count: 1
+            time_cost: 3888
+      bear_toy:
+        current: 36
+        max: 60
+        entities:
+          pack1:
+            count: 1
+            time_cost: 6768
+      dragon_toy:
+        current: 60
+        max: 60
+        entities:
+          pack1:
+            count: 1
+            time_cost: 18144
+  inn:
+    number_of_building: 2
+    slots: 6 # Assumption each building have same number of slots
+    item_name:
+      beer:
+        current: 58
+        max: 60
+        entities:
+          pack1:
+            count: 1
+            time_cost: 6480
+      redberry_juice:
+        current: 62
+        max: 60
+        entities:
+          pack1:
+            count: 1
+            time_cost: 16848
+      root_bottle:
+        current: 61
+        max: 60
+        entities:
+          pack1:
+            count: 1
+            time_cost: 29736
+  cake:
+    number_of_building: 2
+    slots: 6 # Assumption each building have same number of slots
+    item_name:
+      muffin:
+        current: 61
+        max: 60
+        entities:
+          pack1:
+            count: 1
+            time_cost: 7226
+      strawberry_cake:
+        current: 61
+        max: 60
+        entities:
+          pack1:
+            count: 1
+            time_cost: 19458
+      party_cake:
+        current: 60
+        max: 60
+        entities:
+          pack1:
+            count: 1
+            time_cost: 20904
+  jewelry_salon:
+    number_of_building: 2
+    slots: 6 # Assumption each building have same number of slots
+    item_name:
+      ring:
+        current: 61
+        max: 60
+        entities:
+          pack1:
+            count: 1
+            time_cost: _
+      brooch:
+        current: 60
+        max: 60
+        entities:
+          pack1:
+            count: 1
+            time_cost: _
+      crown:
+        current: 50
+        max: 60
+        entities:
+          pack1:
+            count: 1
+            time_cost: _

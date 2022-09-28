@@ -64,3 +64,21 @@ Allocation for jammery :
 nrof_jellybean_jam_pack2 = 6.0
 nrof_sweet_jelly_jam_pack2 = 2.0
 ============================================================
+Allocation for workshop :
+nrof_bead_pack1 = 2.0
+nrof_glass_pack1 = 1.0
+============================================================
+Allocation for dairy :
+============================================================
+Allocation for cafe :
+nrof_boba_pack1 = 1.0
+nrof_latte_pack1 = 1.0
+============================================================
+Allocation for toy_store :
+nrof_bear_toy_pack1 = 2.0
+============================================================
+Allocation for inn :
+nrof_beer_pack1 = 1.0
+============================================================
+Allocation for cake :
+============================================================
