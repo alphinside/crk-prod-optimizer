@@ -87,8 +87,8 @@ def optimize_craft(name: str, config: DictConfig, time_budget: int):
 
     for entity_name, entity in entities.items():
         parsed_item = entity_name.split("_")
-        item_config = getattr(config.item_name, parsed_item[0])
-        entity_config = getattr(item_config.entities, parsed_item[1])
+        item_config = getattr(config.item_name, "_".join(parsed_item[:-1]))
+        entity_config = getattr(item_config.entities, parsed_item[-1])
 
         count_multiply = entity * entity_config.count
         count_multiply_list.append(count_multiply)
@@ -103,6 +103,35 @@ def optimize_craft(name: str, config: DictConfig, time_budget: int):
         lpSum(var for var in entities.values()) <= config.slots,
         "Slot Limit Constraints",
     )
+
+    # Least item must included constraints
+
+    current_count = [
+        {"name": k, "current": v.current} for k, v in config.item_name.items()
+    ]
+    sorted_current = sorted(current_count, key=lambda d: d["current"])
+
+    min_resource_is_found = False
+    while not min_resource_is_found:
+        for _item in sorted_current:
+            item_config = getattr(config.item_name, _item["name"])
+
+            candidates = []
+            for _entity, _entity_config in item_config.entities.items():
+                if _entity_config.time_cost <= time_budget:
+                    candidates.append(f"{_item['name']}_{_entity}")
+
+            if len(candidates) == 0:
+                continue
+
+            problem += (
+                lpSum([entities[entity_name] for entity_name in candidates])
+                >= 1,
+                "Least Item Constraints",
+            )
+            min_resource_is_found = True
+
+            break
 
     # Count constraints
     for item, item_config in config.item_name.items():
@@ -133,8 +162,8 @@ def optimize_craft(name: str, config: DictConfig, time_budget: int):
 
     for entity_name, entity in entities.items():
         parsed_item = entity_name.split("_")
-        item_config = getattr(config.item_name, parsed_item[0])
-        entity_config = getattr(item_config.entities, parsed_item[1])
+        item_config = getattr(config.item_name, "_".join(parsed_item[:-1]))
+        entity_config = getattr(item_config.entities, parsed_item[-1])
 
         time_multiply = entity * entity_config.time_cost
         time_multiply_list.append(time_multiply)
