@@ -1,5 +1,7 @@
 Optimal allocation for duration: 7200
 
+MATERIALS
+****************************************************************************************************
 Allocation for wood :
 nrof_pack2 = 7.0
 nrof_pack3 = 1.0
@@ -30,4 +32,12 @@ Will obtain milk = 12.0
 Allocation for cotton :
 nrof_pack1 = 2.0
 Will obtain cotton = 2.0
+============================================================
+
+CRAFTS
+****************************************************************************************************
+Allocation for smithy :
+nrof_axe_pack2 = 2.0
+nrof_pickaxe_pack1 = 5.0
+nrof_pickaxe_pack2 = 1.0
 ============================================================

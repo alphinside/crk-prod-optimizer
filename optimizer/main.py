@@ -111,7 +111,7 @@ def optimize_craft(name: str, config: DictConfig, time_budget: int):
             for entity_name in item_config.entities.keys():
                 problem += (
                     entities[f"{item}_{entity_name}"] == 0,
-                    f"{item} Current More Than Max Constraint",
+                    f"{item}_{entity_name} Current More Than Max Constraint",
                 )
         else:
             count_limit_list = []
@@ -122,22 +122,54 @@ def optimize_craft(name: str, config: DictConfig, time_budget: int):
                 count_limit_list.append(count_limit)
 
             problem += (
-                lpSum(count_limit_list) <= item_config.max,
-                f"{item} Sum More Than Max Constraint ",
+                lpSum(count_limit_list)
+                <= (item_config.max - item_config.current)
+                / config.number_of_building,
+                f"{item}_{entity_name} Sum More Than Max Constraint ",
             )
 
-    problem.writeLP("debug.lp")
+    # Time constraints
+    time_multiply_list = []
+
+    for entity_name, entity in entities.items():
+        parsed_item = entity_name.split("_")
+        item_config = getattr(config.item_name, parsed_item[0])
+        entity_config = getattr(item_config.entities, parsed_item[1])
+
+        time_multiply = entity * entity_config.time_cost
+        time_multiply_list.append(time_multiply)
+
+    problem += (
+        lpSum(time_multiply_list) <= time_budget,
+        "Time Limit Constraints",
+    )
+
+    # Solver
+    problem.solve(PULP_CBC_CMD(msg=0))
+
+    # Results
+    with open(OUTPUT_FILE, "a") as f:
+        f.write(f"Allocation for {name} :\n")
+        for var in problem.variables():
+            if var.varValue != 0:
+                f.write(f"{var.name} = {var.varValue}\n")
+
+        f.write("=" * 60 + "\n")
 
 
 def main(
     time_budget: int = typer.Option(3600), conf_file: str = "config.yaml"
 ):
     with open(OUTPUT_FILE, "a") as f:
-        f.write(f"Optimal allocation for duration: {time_budget}\n\n")
+        f.write(f"Optimal allocation for duration: {time_budget}\n")
 
     config = OmegaConf.load(conf_file)
     materials_config = config.materials
     crafts_config = config.crafts
+
+    with open(OUTPUT_FILE, "a") as f:
+        f.write("\nMATERIALS\n")
+        f.write("*" * 100 + "\n")
 
     for material, config in materials_config.items():
         optimize_material(
@@ -145,6 +177,10 @@ def main(
             config=config,
             time_budget=time_budget,
         )
+
+    with open(OUTPUT_FILE, "a") as f:
+        f.write("\nCRAFTS\n")
+        f.write("*" * 100 + "\n")
 
     for craft, config in crafts_config.items():
         optimize_craft(name=craft, config=config, time_budget=time_budget)
